@@ -4,10 +4,10 @@
 
 Welcome to TerraForge, a Rust-based terrain engine designed for high-performance and scalable terrain generation and manipulation. TerraForge leverages advanced algorithms and parallel processing to generate and triangulate vast terrains efficiently.
 
-## Table of Contents
+## Table of Contents!
 
 - [TerraForge](#terraforge)
-  - [Table of Contents](#table-of-contents)
+  - [Table of Contents!](#table-of-contents)
   - [Overview](#overview)
   - [Features](#features)
   - [Installation](#installation)
