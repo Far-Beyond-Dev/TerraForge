@@ -7,7 +7,7 @@ pub fn perform_triangulation(points: Vec<(f64, f64, f64)>) -> Result<DelaunayTri
         triangulation.insert(Point2::new(point.0, point.1))?;
     }
 
-    // add the z value to the triangulation
+    println!("Triangulation: {:?}", triangulation);
 
     Ok(triangulation)
 }
