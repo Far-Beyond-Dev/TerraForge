@@ -77,13 +77,13 @@ pub fn generate_fibonacci_sphere(num_samples: usize, min_latitude: f64, max_lati
     }
 
     let duration = start_time.elapsed();
-
+/* 
     let mut file = File::create("output.txt")?;
     writeln!(file, "Generated points:")?;
     writeln!(file, "Time elapsed: {:?}", duration)?;
     for point in &points {
         writeln!(file, "{:?}", point)?;
     }
-
+*/
     Ok(points)
 }

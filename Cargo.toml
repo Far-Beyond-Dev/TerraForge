@@ -1,5 +1,6 @@
 [package]
-name = "terra_forge"
+name = "TerraForge"
+description = "Lightspeed terrain generation at scale in rust"
 version = "0.1.0"
 edition = "2021"
 

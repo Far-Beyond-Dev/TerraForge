@@ -8,6 +8,6 @@ pub fn perform_triangulation(points: Vec<(f64, f64, f64)>) -> Result<DelaunayTri
     }
 
     println!("Triangulation: {:?}", triangulation);
-
+    
     Ok(triangulation)
 }
