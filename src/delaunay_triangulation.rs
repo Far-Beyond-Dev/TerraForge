@@ -10,14 +10,14 @@ pub fn perform_triangulation(points: Vec<(f64, f64, f64)>) {//-> Result<Delaunay
     for face in triangulation.vertices() {
         // face is a FaceHandle
         // edges is an array containing 3 directed edge handles
-        let edges = face.adjacent_edges();
-        for edge in &edges {
-          let from = edge.from();
-        let to = edge.to();
-        // from and to are vertex handles
-        //println!("found an edge: {:?} -> {:?}", from, to);
-        println!("Points.Add(Fvector2D({:?}, {:?}));", from.position().x, to.position().y);
-        }
+        //   let edges = face.adjacent_edges();
+        //   for edge in &edges {
+        //     let from = edge.from();
+        //    let to = edge.to();
+        //    from and to are vertex handles
+        //    println!("found an edge: {:?} -> {:?}", from, to);
+        //    println!("Points.Add(Fvector2D({:?}, {:?}));", from.position().x, to.position().y);
+        //   }
 
          // vertices is an array containing 3 vertex handles
         //let vertices = face.vertices();
