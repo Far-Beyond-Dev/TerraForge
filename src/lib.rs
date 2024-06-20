@@ -6,7 +6,7 @@ use delaunay_triangulation::perform_triangulation;
 
 pub fn main() {
     println!("Generating Sphere...");
-    let num_samples = 1000000;
+    let num_samples = 1000;
     let min_latitude = -90.0;
     let max_latitude = 90.0;
     let min_longitude = -180.0;
