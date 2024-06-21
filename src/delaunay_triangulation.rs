@@ -1,35 +1,29 @@
-use spade::{DelaunayTriangulation, Triangulation, Point2, InsertionError};
+use spade::{DelaunayTriangulation, Point2, Triangulation};
 
-pub fn perform_triangulation(points: Vec<(f64, f64, f64)>) {//-> Result<DelaunayTriangulation<Point2<f64>>, InsertionError> {
+pub fn perform_triangulation(points: Vec<(f64, f64, f64)>) {
     let mut triangulation: DelaunayTriangulation<_> = DelaunayTriangulation::new();
 
     for point in points {
-        triangulation.insert(Point2::new(point.0, point.1));//?;
+        triangulation.insert(Point2::new(point.0, point.1)).expect("Insertion failed");
     }
 
-    for face in triangulation.vertices() {
-        // face is a FaceHandle
-        // edges is an array containing 3 directed edge handles
-        //   let edges = face.adjacent_edges();
-        //   for edge in &edges {
-        //     let from = edge.from();
-        //    let to = edge.to();
-        //    from and to are vertex handles
-        //    println!("found an edge: {:?} -> {:?}", from, to);
-        //    println!("Points.Add(Fvector2D({:?}, {:?}));", from.position().x, to.position().y);
-        //   }
+    // Iterate over all vertices and print their positions
+//    println!("Vertices:");
+//    for vertex in triangulation.vertices() {
+//        let position = vertex.position();
+//        println!("Poits.Add(FVector2D({}, {}));", position.x, position.y);
+//    }
 
-         // vertices is an array containing 3 vertex handles
-        //let vertices = face.vertices();
-        //for vertex in &vertices {
-          //println!("Points.Add({:?}", vertex.position());
-        //}
-      }
-
-        
-      
-
-    //println!("Triangulation: {:?}", triangulation);
-    
-    //Ok(triangulation)
+    // Iterate over all undirected edges and print the positions of the vertices they connect
+//    println!("Edges:");
+//    for edge in triangulation.undirected_edges() {
+//        let vertices = edge.vertices();
+//        let from = vertices[0];
+//        let to = vertices[1];
+//        println!(
+//            "Edges.Add(FEdge(FVector2D({}, {}), FVector2D({}, {})));",
+//            from.position().x, from.position().y,
+//            to.position().x, to.position().y
+//        );
+//    }
 }
