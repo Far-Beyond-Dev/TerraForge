@@ -3,7 +3,7 @@ name = "TerraForge"
 description = "Lightspeed terrain generation at scale in rust"
 license = "Apache-2.0"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 spade = "2.9.0"
