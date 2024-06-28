@@ -148,7 +148,7 @@ pub fn simulate() {
     loop {
         // Sleep for 1 second
         let start = Instant::now();
-        thread::sleep(Duration::from_secs(1));
+        thread::sleep(Duration::from_secs(15));
         let duration = start.elapsed();
         println!("Sleeping for 1 second took: {:?}", duration);
 
@@ -161,6 +161,6 @@ pub fn simulate() {
         let duration = start.elapsed();
         println!("Updating galaxy positions took: {:?}", duration);
         println!("Updated {} objects", galaxies.len().to_string());
-        println!("-----------------");
+        println!("---------Lerp with last movement data to get smooth orbits---------");
     }
 }
