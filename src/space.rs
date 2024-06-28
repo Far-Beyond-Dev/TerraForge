@@ -10,14 +10,14 @@ use std::time::{Duration, Instant};
 // Struct representing a Galaxy
 #[derive(Debug)]
 struct Galaxy {
-    guid: Uuid,
-    position: (f64, f64, f64),
-    velocity: (f64, f64, f64),
-    a: f64, // Semi-major axis
-    b: f64, // Semi-minor axis
+    guid: Uuid, // Unique identifier for the galaxy
+    position: (f64, f64, f64), // Current position in 3D space
+    velocity: (f64, f64, f64), // Velocity in 3D space (not used here)
+    a: f64, // Semi-major axis of the orbit
+    b: f64, // Semi-minor axis of the orbit
     t: f64, // Orbital period
-    inclination: f64, // Inclination angle
-    ascending_node: f64, // Longitude of ascending node
+    inclination: f64, // Inclination angle of the orbit
+    ascending_node: f64, // Longitude of the ascending node
     time_offset: f64, // Initial time offset for orbit calculation
 }
 
@@ -74,11 +74,14 @@ fn generate_galaxy_parameters(guid: Uuid) -> (f64, f64, f64, f64, f64, f64) {
 
 // Function to update position based on elliptical orbit
 fn update_position(galaxy: &mut Galaxy, time: f64) {
+    // Calculate the current angle in the orbit based on time
     let theta: f64 = 2.0 * PI * (time + galaxy.time_offset) / galaxy.t;
+    
+    // Calculate x and y coordinates in the orbital plane
     let x: f64 = galaxy.a * theta.cos();
     let y: f64 = galaxy.b * theta.sin();
     
-    // Rotate by inclination and ascending node
+    // Rotate the coordinates by the inclination and ascending node
     let cos_i: f64 = galaxy.inclination.cos();
     let sin_i: f64 = galaxy.inclination.sin();
     let cos_o: f64 = galaxy.ascending_node.cos();
@@ -88,6 +91,7 @@ fn update_position(galaxy: &mut Galaxy, time: f64) {
     let y_rot: f64 = x * sin_o + y * cos_i * cos_o;
     let z_rot: f64 = y * sin_i;
 
+    // Update the galaxy's position with the rotated coordinates
     galaxy.position = (x_rot, y_rot, z_rot);
 }
 
@@ -99,7 +103,7 @@ fn generate_galaxies(universe_seed: Uuid) -> Vec<Galaxy> {
     let mut rng: StdRng = SeedableRng::from_seed(seed_32);
 
     // Generate the number of galaxies
-    let num_galaxies: i32 = rng.gen_range(1000000..5000000); // For example, generate between 300 and 500 thousand galaxies
+    let num_galaxies: i32 = rng.gen_range(1000000..5000000); // Generate between 1 and 5 million galaxies
 
     // Generate galaxies
     (0..num_galaxies).map(|_| {
@@ -146,7 +150,7 @@ pub fn simulate() {
     // Simulation loop
     let mut time = 0.0;
     loop {
-        // Sleep for 1 second
+        // Sleep for 15 seconds
         let start = Instant::now();
         thread::sleep(Duration::from_secs(15));
         let duration = start.elapsed();
