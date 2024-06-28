@@ -1,5 +1,6 @@
 mod fibonacci_sphere;
 mod delaunay_triangulation;
+mod space;
 
 use fibonacci_sphere::generate_fibonacci_sphere;
 use delaunay_triangulation::perform_triangulation;
@@ -18,5 +19,7 @@ pub fn main() {
 
     let tri = perform_triangulation(result.unwrap());
 
-    println!("Triangulation: {:?}", tri);
+    //println!("Triangulation: {:?}", tri);
+    println!("Done");
+    space::simulate();
 }

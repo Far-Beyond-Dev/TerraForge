@@ -130,7 +130,7 @@ fn generate_galaxies(universe_seed: Uuid) -> Vec<Galaxy> {
     }).collect()
 }
 
-fn main() {
+pub fn simulate() {
     // Generate the universe seed
     let universe_seed = generate_guid_from_seed(123);
 
