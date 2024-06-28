@@ -2,10 +2,10 @@ use uuid::Uuid;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::thread;
-use std::time::Duration;
 use rand::{SeedableRng, Rng};
 use rand::rngs::StdRng;
 use std::f64::consts::PI;
+use std::time::{Duration, Instant};
 
 // Struct representing a Galaxy
 #[derive(Debug)]
@@ -74,19 +74,19 @@ fn generate_galaxy_parameters(guid: Uuid) -> (f64, f64, f64, f64, f64, f64) {
 
 // Function to update position based on elliptical orbit
 fn update_position(galaxy: &mut Galaxy, time: f64) {
-    let theta = 2.0 * PI * (time + galaxy.time_offset) / galaxy.T;
-    let x = galaxy.a * theta.cos();
-    let y = galaxy.b * theta.sin();
+    let theta: f64 = 2.0 * PI * (time + galaxy.time_offset) / galaxy.T;
+    let x: f64 = galaxy.a * theta.cos();
+    let y: f64 = galaxy.b * theta.sin();
     
     // Rotate by inclination and ascending node
-    let cos_i = galaxy.inclination.cos();
-    let sin_i = galaxy.inclination.sin();
-    let cos_O = galaxy.ascending_node.cos();
-    let sin_O = galaxy.ascending_node.sin();
+    let cos_i: f64 = galaxy.inclination.cos();
+    let sin_i: f64 = galaxy.inclination.sin();
+    let cos_O: f64 = galaxy.ascending_node.cos();
+    let sin_O: f64 = galaxy.ascending_node.sin();
 
-    let x_rot = x * cos_O - y * cos_i * sin_O;
-    let y_rot = x * sin_O + y * cos_i * cos_O;
-    let z_rot = y * sin_i;
+    let x_rot: f64 = x * cos_O - y * cos_i * sin_O;
+    let y_rot: f64 = x * sin_O + y * cos_i * cos_O;
+    let z_rot: f64 = y * sin_i;
 
     galaxy.position = (x_rot, y_rot, z_rot);
 }
@@ -99,7 +99,7 @@ fn generate_galaxies(universe_seed: Uuid) -> Vec<Galaxy> {
     let mut rng: StdRng = SeedableRng::from_seed(seed_32);
 
     // Generate the number of galaxies
-    let num_galaxies = rng.gen_range(5..20); // For example, generate between 5 and 20 galaxies
+    let num_galaxies: i32 = rng.gen_range(1000000..5000000); // For example, generate between 300 and 500 thousand galaxies
 
     // Generate galaxies
     (0..num_galaxies).map(|_| {
@@ -132,28 +132,35 @@ fn generate_galaxies(universe_seed: Uuid) -> Vec<Galaxy> {
 
 pub fn simulate() {
     // Generate the universe seed
+    let start = Instant::now();
     let universe_seed = generate_guid_from_seed(123);
+    let duration = start.elapsed();
+    println!("Generating universe seed took: {:?}", duration);
 
     // Generate galaxies using the universe seed
+    let start = Instant::now();
     let mut galaxies = generate_galaxies(universe_seed);
+    let duration = start.elapsed();
+    println!("Generating galaxies took: {:?}", duration);
 
     // Simulation loop
     let mut time = 0.0;
     loop {
-        // Print galaxy positions
-        for galaxy in &galaxies {
-            println!("Galaxy {:?} position: {:?}", galaxy.guid, galaxy.position);
-        }
-
         // Sleep for 1 second
+        let start = Instant::now();
         thread::sleep(Duration::from_secs(1));
+        let duration = start.elapsed();
+        println!("Sleeping for 1 second took: {:?}", duration);
 
         // Update galaxy positions
         time += 1.0;
+        let start = Instant::now();
         for galaxy in &mut galaxies {
             update_position(galaxy, time);
         }
-
+        let duration = start.elapsed();
+        println!("Updating galaxy positions took: {:?}", duration);
+        println!("Updated {} objects", galaxies.len().to_string());
         println!("-----------------");
     }
 }
