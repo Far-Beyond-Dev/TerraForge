@@ -15,7 +15,7 @@ struct Galaxy {
     velocity: (f64, f64, f64),
     a: f64, // Semi-major axis
     b: f64, // Semi-minor axis
-    T: f64, // Orbital period
+    t: f64, // Orbital period
     inclination: f64, // Inclination angle
     ascending_node: f64, // Longitude of ascending node
     time_offset: f64, // Initial time offset for orbit calculation
@@ -64,28 +64,28 @@ fn generate_galaxy_parameters(guid: Uuid) -> (f64, f64, f64, f64, f64, f64) {
     
     let a = rng.gen_range(10.0..50.0); // Semi-major axis
     let b = rng.gen_range(5.0..25.0); // Semi-minor axis
-    let T = rng.gen_range(100.0..500.0); // Orbital period
+    let t = rng.gen_range(100.0..500.0); // Orbital period
     let inclination = rng.gen_range(0.0..PI); // Inclination angle
     let ascending_node = rng.gen_range(0.0..(2.0 * PI)); // Longitude of ascending node
-    let time_offset = rng.gen_range(0.0..T); // Initial time offset for orbit calculation
+    let time_offset = rng.gen_range(0.0..t); // Initial time offset for orbit calculation
     
-    (a, b, T, inclination, ascending_node, time_offset)
+    (a, b, t, inclination, ascending_node, time_offset)
 }
 
 // Function to update position based on elliptical orbit
 fn update_position(galaxy: &mut Galaxy, time: f64) {
-    let theta: f64 = 2.0 * PI * (time + galaxy.time_offset) / galaxy.T;
+    let theta: f64 = 2.0 * PI * (time + galaxy.time_offset) / galaxy.t;
     let x: f64 = galaxy.a * theta.cos();
     let y: f64 = galaxy.b * theta.sin();
     
     // Rotate by inclination and ascending node
     let cos_i: f64 = galaxy.inclination.cos();
     let sin_i: f64 = galaxy.inclination.sin();
-    let cos_O: f64 = galaxy.ascending_node.cos();
-    let sin_O: f64 = galaxy.ascending_node.sin();
+    let cos_o: f64 = galaxy.ascending_node.cos();
+    let sin_o: f64 = galaxy.ascending_node.sin();
 
-    let x_rot: f64 = x * cos_O - y * cos_i * sin_O;
-    let y_rot: f64 = x * sin_O + y * cos_i * cos_O;
+    let x_rot: f64 = x * cos_o - y * cos_i * sin_o;
+    let y_rot: f64 = x * sin_o + y * cos_i * cos_o;
     let z_rot: f64 = y * sin_i;
 
     galaxy.position = (x_rot, y_rot, z_rot);
@@ -114,7 +114,7 @@ fn generate_galaxies(universe_seed: Uuid) -> Vec<Galaxy> {
         let guid = generate_galaxy_guid(universe_seed, position);
 
         // Generate orbital parameters
-        let (a, b, T, inclination, ascending_node, time_offset) = generate_galaxy_parameters(guid);
+        let (a, b, t, inclination, ascending_node, time_offset) = generate_galaxy_parameters(guid);
 
         Galaxy {
             guid,
@@ -122,7 +122,7 @@ fn generate_galaxies(universe_seed: Uuid) -> Vec<Galaxy> {
             velocity: (0.0, 0.0, 0.0), // Initially, velocity is not used
             a,
             b,
-            T,
+            t,
             inclination,
             ascending_node,
             time_offset,
