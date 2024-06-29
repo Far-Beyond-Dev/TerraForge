@@ -154,7 +154,7 @@ pub fn simulate() {
         let start = Instant::now();
         thread::sleep(Duration::from_secs(15));
         let duration = start.elapsed();
-        println!("Sleeping for 1 second took: {:?}", duration);
+        println!("Sleeping for 15 second took: {:?}", duration);
 
         // Update galaxy positions
         time += 1.0;
