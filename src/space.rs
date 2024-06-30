@@ -139,6 +139,7 @@ pub fn simulate() {
     let start = Instant::now();
     let universe_seed = generate_guid_from_seed(123);
     let duration = start.elapsed();
+    println!("Universe Seed: {}", universe_seed.to_string());
     println!("Generating universe seed took: {:?}", duration);
 
     // Generate galaxies using the universe seed
