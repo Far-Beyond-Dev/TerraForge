@@ -3,7 +3,7 @@ mod delaunay_triangulation;
 mod space;
 
 use fibonacci_sphere::generate_fibonacci_sphere;
-use delaunay_triangulation::perform_triangulation;
+use delaunay_triangulation::{perform_triangulation, generate_voronoi, generate_voronoi_on_sphere};
 
 pub fn main() {
     println!("Generating Sphere...");
@@ -13,13 +13,17 @@ pub fn main() {
     let min_longitude = -180.0;
     let max_longitude = 180.0;
     let seed = 1.0;
-    
+    let radius = 1000.0; // Adjust this to match your sphere radius
 
-    let result = generate_fibonacci_sphere(num_samples, min_latitude, max_latitude, min_longitude, max_longitude, seed);
+    let points = generate_fibonacci_sphere(num_samples, min_latitude, max_latitude, min_longitude, max_longitude, seed).unwrap();
+    let triangulation = perform_triangulation(points);
 
-    let tri = perform_triangulation(result.unwrap());
+    // Generate 2D Voronoi diagram
+    generate_voronoi(&triangulation);
 
-    //println!("Triangulation: {:?}", tri);
+    // Generate Voronoi diagram projected onto a sphere
+    generate_voronoi_on_sphere(&triangulation, radius);
+
     println!("Done");
     space::simulate();
 }
