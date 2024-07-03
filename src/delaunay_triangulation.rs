@@ -1,20 +1,18 @@
 use spade::{DelaunayTriangulation, Point2, Triangulation};
 use spade::handles::VoronoiVertex;
-
 pub fn perform_triangulation(points: Vec<(f64, f64, f64)>) -> DelaunayTriangulation<Point2<f64>> {
     let mut triangulation = DelaunayTriangulation::new();
 
     for point in points {
         // Project the 3D point onto a 2D plane using spherical coordinates
         let (x, y, z) = point;
-        let lat = z.asin().to_degrees();
-        let lon = y.atan2(x).to_degrees();
+        let lat = (z / 1000.0).asin();
+        let lon = y.atan2(x);
         triangulation.insert(Point2::new(lon, lat)).expect("Insertion failed");
     }
 
     triangulation
 }
-
 pub fn generate_voronoi(triangulation: &DelaunayTriangulation<Point2<f64>>) {
     println!("Voronoi Edges:");
     for edge in triangulation.undirected_voronoi_edges() {
