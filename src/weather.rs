@@ -3,7 +3,7 @@ use rand::rngs::StdRng;
 use std::f64::consts::PI;
 
 // Function to generate Fibonacci sphere points
-fn fibonacci_sphere(samples: usize) -> Vec<[f64; 3]> {
+pub fn fibonacci_sphere(samples: usize) -> Vec<[f64; 3]> {
     let mut points = Vec::with_capacity(samples);
     let phi = PI * (3.0 - (5.0f64).sqrt());
 
@@ -32,7 +32,7 @@ struct WeatherCondition {
 }
 
 // Function to generate initial weather conditions
-fn generate_weather_conditions(seed: u64, samples: usize) -> Vec<WeatherCondition> {
+pub fn generate_weather_conditions(seed: u64, samples: usize) -> Vec<WeatherCondition> {
     let mut rng = StdRng::seed_from_u64(seed);
     let mut conditions = Vec::with_capacity(samples);
 
@@ -56,7 +56,7 @@ fn generate_weather_conditions(seed: u64, samples: usize) -> Vec<WeatherConditio
 }
 
 // Function to calculate precipitation based on temperature and humidity
-fn calculate_precipitation(temperature: f64, humidity: f64) -> f64 {
+pub fn calculate_precipitation(temperature: f64, humidity: f64) -> f64 {
     if temperature > 0.0 && humidity > 50.0 {
         humidity / 100.0 * (temperature / 30.0) * 10.0 // Simplified precipitation calculation
     } else {
@@ -65,7 +65,7 @@ fn calculate_precipitation(temperature: f64, humidity: f64) -> f64 {
 }
 
 // Function to simulate weather evolution
-fn simulate_weather(conditions: &mut Vec<WeatherCondition>, time_step: usize) {
+pub fn simulate_weather(conditions: &mut Vec<WeatherCondition>, time_step: usize) {
     for condition in conditions.iter_mut() {
         condition.temperature += (time_step as f64 * 0.1) % 5.0 - 2.5; // Simplified temperature change
         condition.humidity += (time_step as f64 * 0.05) % 10.0 - 5.0; // Simplified humidity change
@@ -82,7 +82,7 @@ fn simulate_weather(conditions: &mut Vec<WeatherCondition>, time_step: usize) {
 }
 
 // Function to introduce global weather events
-fn global_weather_event(conditions: &mut Vec<WeatherCondition>, event_type: &str) {
+pub fn global_weather_event(conditions: &mut Vec<WeatherCondition>, event_type: &str) {
     match event_type {
         "storm" => {
             for condition in conditions.iter_mut() {
@@ -111,27 +111,27 @@ fn global_weather_event(conditions: &mut Vec<WeatherCondition>, event_type: &str
     }
 }
 
-fn main() {
-    // Example UUID and orbital data
-    let planet_uuid = 123456789u64;
-    let num_samples = 1000; // Number of points on the Fibonacci sphere
-
-    // Generate Fibonacci sphere points
-    let points = fibonacci_sphere(num_samples);
-
-    // Generate initial weather conditions
-    let mut weather_conditions = generate_weather_conditions(planet_uuid, num_samples);
-
-    // Simulate weather for 10 time steps
-    for time_step in 0..10 {
-        simulate_weather(&mut weather_conditions, time_step);
-    }
-
-    // Introduce a global storm event
-    global_weather_event(&mut weather_conditions, "storm");
-
-    // Print final weather conditions
-    for (i, condition) in weather_conditions.iter().enumerate() {
-        println!("Point {}: {:?}", i, condition);
-    }
-}
+// fn main() {
+//     // Example UUID and orbital data
+//     let planet_uuid = 123456789u64;
+//     let num_samples = 1000; // Number of points on the Fibonacci sphere
+// 
+//     // Generate Fibonacci sphere points
+//     let points = fibonacci_sphere(num_samples);
+// 
+//     // Generate initial weather conditions
+//     let mut weather_conditions = generate_weather_conditions(planet_uuid, num_samples);
+// 
+//     // Simulate weather for 10 time steps
+//     for time_step in 0..10 {
+//         simulate_weather(&mut weather_conditions, time_step);
+//     }
+// 
+//     // Introduce a global storm event
+//     global_weather_event(&mut weather_conditions, "storm");
+// 
+//     // Print final weather conditions
+//     for (i, condition) in weather_conditions.iter().enumerate() {
+//         println!("Point {}: {:?}", i, condition);
+//     }
+// }
