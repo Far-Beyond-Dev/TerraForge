@@ -111,27 +111,39 @@ pub fn global_weather_event(conditions: &mut Vec<WeatherCondition>, event_type: 
     }
 }
 
-// fn main() {
-//     // Example UUID and orbital data
-//     let planet_uuid = 123456789u64;
-//     let num_samples = 1000; // Number of points on the Fibonacci sphere
-// 
-//     // Generate Fibonacci sphere points
-//     let points = fibonacci_sphere(num_samples);
-// 
-//     // Generate initial weather conditions
-//     let mut weather_conditions = generate_weather_conditions(planet_uuid, num_samples);
-// 
-//     // Simulate weather for 10 time steps
-//     for time_step in 0..10 {
-//         simulate_weather(&mut weather_conditions, time_step);
-//     }
-// 
-//     // Introduce a global storm event
-//     global_weather_event(&mut weather_conditions, "storm");
-// 
-//     // Print final weather conditions
-//     for (i, condition) in weather_conditions.iter().enumerate() {
-//         println!("Point {}: {:?}", i, condition);
-//     }
-// }
+/////////////////////////////////////////////////
+///  
+///  # Docs Coming Soon!!!
+///  
+///  
+///  
+///  
+///  
+///  
+///  
+///  
+///  
+///  
+///  
+
+ fn init(planet_uuid: u64, num_samples: u32) {
+ 
+     // Generate Fibonacci sphere points
+     let points = fibonacci_sphere(num_samples);
+ 
+     // Generate initial weather conditions
+     let mut weather_conditions = generate_weather_conditions(planet_uuid, num_samples);
+ 
+     // Simulate weather for 10 time steps
+     for time_step in 0..10 {
+         simulate_weather(&mut weather_conditions, time_step);
+     }
+ 
+     // Introduce a global storm event
+     global_weather_event(&mut weather_conditions, "storm");
+ 
+     // Print final weather conditions
+     for (i, condition) in weather_conditions.iter().enumerate() {
+         println!("Point {}: {:?}", i, condition);
+     }
+ }
