@@ -1,3 +1,4 @@
+use rayon::prelude::*;
 use uuid::Uuid;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
@@ -160,9 +161,9 @@ pub fn simulate() {
         // Update galaxy positions
         time += 1.0;
         let start = Instant::now();
-        for galaxy in &mut galaxies {
+        galaxies.par_iter_mut().for_each(|galaxy| {
             update_position(galaxy, time);
-        }
+        });
         let duration = start.elapsed();
         println!("Updating galaxy positions took: {:?}", duration);
         println!("Updated {} objects", galaxies.len().to_string());
