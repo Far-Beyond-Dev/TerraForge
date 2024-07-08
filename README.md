@@ -107,3 +107,100 @@ TerraForge is licensed under the MIT License. See the [LICENSE](LICENSE) file fo
 ---
 
 Thank you for using TerraForge! If you have any questions or feedback, feel free to open an issue on our GitHub repository.
+
+
+
+
+
+
+
+
+
+# Spherical Voronoi Diagram Generator
+
+This Rust library generates evenly spaced Voronoi diagrams on a sphere using the Fibonacci spiral method. It's designed to create hexagon-like regions of nearly uniform size across the surface of a sphere, which can be useful for various applications such as planet generation, geographic data analysis, or spherical tessellation.
+
+## Concept
+
+The library uses the following key concepts:
+
+1. **Fibonacci Spiral**: A method for distributing points evenly on a sphere's surface.
+2. **Jittering**: Adding small random offsets to points to prevent artifacts from perfectly regular patterns.
+3. **Stereographic Projection**: A technique to map points on a sphere to a 2D plane and back.
+4. **Delaunay Triangulation**: Used to create the dual graph of the Voronoi diagram.
+5. **Spherical Voronoi Diagram**: The final result, showing regions on the sphere where each region contains all points closer to its center than to any other center.
+
+## Implementation
+
+The library is implemented in Rust and uses the following main components:
+
+- `fibonacci_point`: Generates a single point on the Fibonacci spiral.
+- `generate_fibonacci_sphere`: Creates a set of points distributed on a sphere using the Fibonacci spiral method.
+- `create_spherical_voronoi`: Constructs the Voronoi diagram from the generated points.
+- `stereographic_projection` and `inverse_stereographic_projection`: Handle the mapping between 3D spherical coordinates and 2D planar coordinates.
+- `calculate_spherical_circumcenter`: Computes the center of a spherical triangle, used for Voronoi cell centers.
+- `print_voronoi_edges`: Outputs the Voronoi diagram edges for visualization.
+
+## Usage
+
+To use this library in your Rust project:
+
+1. Add the library to your `Cargo.toml`:
+
+```toml
+[dependencies]
+spherical_voronoi = { git = "https://github.com/yourusername/spherical_voronoi.git" }
+```
+
+2. In your Rust code, import and use the library:
+
+```rust
+use spherical_voronoi::{generate_fibonacci_sphere, create_spherical_voronoi, print_voronoi_edges};
+
+fn main() -> std::io::Result<()> {
+    let num_samples = 1000;
+    let jitter = 0.1;
+    let points = generate_fibonacci_sphere(num_samples, jitter)?;
+    
+    let triangulation = create_spherical_voronoi(points);
+
+    print_voronoi_edges(&triangulation)?;
+
+    println!("Voronoi edges have been written to voronoi_edges.txt");
+
+    Ok(())
+}
+```
+
+This will generate a set of points on a sphere, create a Voronoi diagram, and write the edges to a file named `voronoi_edges.txt` in a format suitable for visualization in tools such as Unreal Engine.
+
+## Customization
+
+You can adjust the following parameters to customize the output:
+
+- `num_samples`: Increase for more detailed tessellation (more Voronoi cells).
+- `jitter`: Adjust between 0.0 and 1.0 to control the randomness of point placement.
+
+## Output
+
+The library generates two files:
+
+- `output.txt`: Contains the list of generated points and the time taken to generate them.
+- `voronoi_edges.txt`: Contains the edges of the Voronoi diagram in a format suitable for visualization.
+
+## Dependencies
+
+This library depends on the following Rust crates:
+
+- `spade`: For Delaunay triangulation
+- `rand`: For random number generation
+- `rayon`: For parallel processing
+
+Ensure these dependencies are included in your `Cargo.toml` file.
+
+```toml
+[dependencies]
+spade = "1.8.2"
+rand = "0.8.5"
+rayon = "1.5.1"
+```
